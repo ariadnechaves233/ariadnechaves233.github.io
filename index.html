@@ -23,7 +23,6 @@
                         sans: ['"Inter"', 'sans-serif'],
                     },
                     colors: {
-                        // Paleta refinada com o tom aprovado #240046
                         brand: {
                             50: '#F8F6FA',
                             100: '#EFEAF6',
@@ -32,8 +31,8 @@
                             400: '#A482D1',
                             500: '#8A5BB8',
                             800: '#3D2554',
-                            900: '#240046', // O novo tom escuro, elegante e profissional
-                            dark: '#1A0033' // Variação ultra-escura para profundidade
+                            900: '#240046', 
+                            dark: '#1A0033' 
                         }
                     }
                 }
@@ -43,17 +42,23 @@
 
     <style>
         /* 
-         * FORÇAR REMOÇÃO DO CURSOR NATIVO 
-         * Isso impede o "piscar" para a mãozinha ao passar sobre links e botões.
-         * (Nota: Dentro do iframe do Behance, as regras deles assumem o controle, o que mantém a usabilidade nativa do player).
+         * FORÇAR REMOÇÃO DO CURSOR NATIVO APENAS EM DESKTOP
+         * O Media Query (hover: hover) garante que no Mobile o touch continue funcionando nativamente
          */
-        * {
-            cursor: none !important;
+        @media (hover: hover) and (pointer: fine) {
+            * {
+                cursor: none !important;
+            }
         }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
+        }
+        @media (min-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
         }
         ::-webkit-scrollbar-track {
             background: #240046;
@@ -102,35 +107,56 @@
 
         /* Grid Masonry para os Projetos */
         .masonry-grid {
-            column-gap: 2rem;
+            column-gap: 1.5rem;
         }
-        @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 640px) { .masonry-grid { column-count: 2; column-gap: 2rem; } }
         @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
         
         .masonry-item {
             break-inside: avoid;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .masonry-item { margin-bottom: 2rem; }
         }
 
+        /* Altura responsiva para os Iframes do Behance */
         .behance-embed {
             width: 100% !important;
-            height: 380px !important;
+            height: 280px !important;
             border: none;
             border-radius: 1.5rem;
             background-color: #EFEAF6;
+        }
+        @media (min-width: 768px) {
+            .behance-embed {
+                height: 380px !important;
+            }
+        }
+        
+        /* Textura Abstrata de Linhas Horizontais */
+        .horizontal-lines-texture {
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 39px,
+                rgba(255, 255, 255, 0.05) 39px,
+                rgba(255, 255, 255, 0.05) 40px
+            );
+            /* Máscara radial para fazer as linhas desaparecerem nas bordas */
+            -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 80%);
+            mask-image: radial-gradient(circle at center, black 10%, transparent 80%);
         }
     </style>
 </head>
 <body class="bg-brand-900 text-brand-50 font-sans antialiased overflow-x-hidden selection:bg-brand-400 selection:text-white">
 
-    <!-- Cursor Customizado -->
+    <!-- Cursor Customizado (Só aparece e atua no desktop por causa do JS/CSS) -->
     <div class="cursor-dot hidden md:block"></div>
 
-    <!-- Navegação (Mistura-se dinamicamente com o fundo) -->
-    <nav class="w-full py-8 px-6 md:px-12 max-w-7xl mx-auto flex justify-between items-center fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white pointer-events-none">
-        <!-- Pointer-events-auto recoloca a interatividade apenas nos links -->
-        <a href="#" class="text-xl font-bold tracking-tight pointer-events-auto hover-trigger">Ariadne.</a>
-        <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide pointer-events-auto">
+    <!-- Navegação Centralizada (Responsiva e com Mix-Blend para contraste automático no fundo branco) -->
+    <nav class="w-full py-6 md:py-8 px-6 max-w-7xl mx-auto flex justify-center items-center fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white pointer-events-none">
+        <div class="flex gap-6 md:gap-12 text-sm md:text-base font-medium tracking-wide pointer-events-auto">
             <a href="#projetos" class="hover-trigger transition-opacity hover:opacity-70">Projetos</a>
             <a href="#sobre" class="hover-trigger transition-opacity hover:opacity-70">Sobre</a>
             <a href="#contato" class="hover-trigger transition-opacity hover:opacity-70">Contato</a>
@@ -140,14 +166,17 @@
     <!-- Header Escuro, Profissional e Dinâmico (#240046) -->
     <header id="hero" class="relative min-h-[100vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-brand-900">
         
+        <!-- Textura de Linhas de Grade Horizontais Abstratas -->
+        <div class="absolute inset-0 z-0 pointer-events-none horizontal-lines-texture"></div>
+
         <!-- Efeito de Luz Dinâmica no Fundo (Segue o mouse) -->
-        <div id="hero-glow" class="absolute w-[800px] h-[800px] bg-brand-500/20 rounded-full blur-[150px] pointer-events-none transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-100 ease-out"></div>
+        <div id="hero-glow" class="absolute w-[600px] h-[600px] md:w-[800px] md:h-[800px] bg-brand-500/20 rounded-full blur-[100px] md:blur-[150px] pointer-events-none transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-100 ease-out z-0"></div>
 
         <div class="relative z-10 max-w-4xl flex flex-col items-center">
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 text-white drop-shadow-2xl">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 text-white drop-shadow-2xl">
                 Ariadne Chaves
             </h1>
-            <p class="text-xl md:text-2xl text-brand-300 font-light tracking-wide mb-12">
+            <p class="text-lg sm:text-xl md:text-2xl text-brand-300 font-light tracking-wide mb-12">
                 Designer Gráfica
             </p>
             
@@ -158,55 +187,55 @@
         </div>
     </header>
 
-    <!-- Container do Efeito Scroll Reveal (Recriado em Vanilla JS) -->
-    <!-- Ele começa com 90% da largura e bordas arredondadas, e expande para 100% cobrindo a tela -->
-    <div id="scroll-reveal-container" class="bg-brand-50 text-brand-900 mx-auto w-[90%] rounded-[3rem] overflow-hidden origin-top relative z-20 shadow-2xl pb-24 transition-all ease-out will-change-transform">
+    <!-- Container do Efeito Scroll Reveal -->
+    <!-- Ajustado para w-[95%] no mobile e w-[90%] no desktop para melhor uso do espaço -->
+    <div id="scroll-reveal-container" class="bg-brand-50 text-brand-900 mx-auto w-[95%] md:w-[90%] rounded-[2rem] md:rounded-[3rem] overflow-hidden origin-top relative z-20 shadow-2xl pb-16 md:pb-24 transition-all ease-out will-change-transform">
         
         <!-- Seção de Projetos -->
-        <section id="projetos" class="py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
-            <div class="mb-16 reveal text-center md:text-left">
+        <section id="projetos" class="py-16 md:py-24 px-4 md:px-12 max-w-[1400px] mx-auto">
+            <div class="mb-12 md:mb-16 reveal text-center md:text-left">
                 <h2 class="text-4xl md:text-6xl font-black tracking-tight text-brand-900 mb-4">Projetos</h2>
             </div>
 
             <div class="masonry-grid reveal">
                 <!-- Projeto 1: Mascote Marina -->
                 <div class="masonry-item hover-trigger">
-                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                    <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 md:hover:-translate-y-2">
                         <iframe src="https://www.behance.net/embed/project/250113827?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
                     </div>
                 </div>
 
                 <!-- Projeto 2: 7 Brasas Logo -->
                 <div class="masonry-item hover-trigger">
-                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                    <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 md:hover:-translate-y-2">
                         <iframe src="https://www.behance.net/embed/project/250114549?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
                     </div>
                 </div>
 
                 <!-- Projeto 3: ECR Logo -->
                 <div class="masonry-item hover-trigger">
-                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                    <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 md:hover:-translate-y-2">
                         <iframe src="https://www.behance.net/embed/project/234673731?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
                     </div>
                 </div>
 
                 <!-- Projeto 4: Fênix Sertão -->
                 <div class="masonry-item hover-trigger">
-                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                    <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 md:hover:-translate-y-2">
                         <iframe src="https://www.behance.net/embed/project/250115177?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
                     </div>
                 </div>
 
                 <!-- Projeto 5: Endomarketing -->
                 <div class="masonry-item hover-trigger">
-                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                    <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 md:hover:-translate-y-2">
                         <iframe src="https://www.behance.net/embed/project/217003613?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
                     </div>
                 </div>
 
                 <!-- Projeto 6: Social Media -->
                 <div class="masonry-item hover-trigger">
-                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                    <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 md:hover:-translate-y-2">
                         <iframe src="https://www.behance.net/embed/project/217002125?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
                     </div>
                 </div>
@@ -214,14 +243,14 @@
         </section>
 
         <!-- Seção Sobre (Nova Copy & Design) -->
-        <section id="sobre" class="py-24 px-6 md:px-12 max-w-5xl mx-auto reveal">
+        <section id="sobre" class="py-16 md:py-24 px-6 md:px-12 max-w-5xl mx-auto reveal">
             
             <!-- Título com Degradê Roxo Escuro para Lavanda -->
-            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-12 text-transparent bg-clip-text bg-gradient-to-r from-brand-900 to-brand-400">
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-8 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-brand-900 to-brand-400">
                 A mente por trás dos pixels.
             </h2>
             
-            <div class="space-y-8 text-lg md:text-xl text-brand-800 font-light leading-relaxed">
+            <div class="space-y-6 md:space-y-8 text-base md:text-xl text-brand-800 font-light leading-relaxed">
                 <p>
                     Antes de ser designer, eu era cozinheira. Parece estranho, eu sei, mas é exatamente daí que vem quem eu sou hoje: a Gastronomia me ensinou a prestar atenção nos detalhes, a cuidar de cada etapa de um processo e a enxergar beleza nas pequenas coisas. Foi só um passo até eu perceber que queria fazer isso com imagens, cores e layouts.
                 </p>
@@ -231,17 +260,17 @@
                 <p>
                     No meio do caminho, também descobri a <strong class="font-semibold text-brand-900">Inteligência Artificial</strong> como uma parceira criativa, e hoje ela faz parte do meu processo, sempre a favor de resultados mais bonitos, acessíveis e feitos pensando em quem vai ver.
                 </p>
-                <p class="font-medium text-brand-900 pt-4">
+                <p class="font-medium text-brand-900 pt-2 md:pt-4">
                     No fim das contas, sou movida por criar coisas que fazem sentido, com carinho e atenção em cada detalhe.
                 </p>
             </div>
 
             <!-- Botão Secundário LinkedIn -->
-            <div class="mt-12 pt-12 border-t border-brand-200">
-                <a href="https://www.linkedin.com/in/ariadne-chaves-ari/" target="_blank" class="hover-trigger inline-flex items-center gap-3 text-brand-900 font-semibold uppercase tracking-wider text-sm hover:text-brand-500 transition-colors">
-                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-                    Disponível para novos desafios — Conecte-se no LinkedIn
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            <div class="mt-12 pt-8 md:pt-12 border-t border-brand-200">
+                <a href="https://www.linkedin.com/in/ariadnechaves" target="_blank" class="hover-trigger inline-flex items-center gap-3 text-brand-900 font-semibold uppercase tracking-wider text-xs md:text-sm hover:text-brand-500 transition-colors">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse flex-shrink-0"></span>
+                    <span>Disponível para novos desafios — Conecte-se no LinkedIn</span>
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
             </div>
         </section>
@@ -249,68 +278,69 @@
     </div> <!-- Fim do Container de Scroll Reveal -->
 
     <!-- Footer Escuro (Integra-se ao fundo da página) -->
-    <footer id="contato" class="py-32 px-6 md:px-12 max-w-7xl mx-auto flex flex-col items-center justify-center text-center reveal relative z-10">
-        <p class="text-brand-400 font-semibold uppercase tracking-widest mb-6 text-sm">Vamos criar juntos?</p>
+    <footer id="contato" class="py-24 md:py-32 px-6 md:px-12 max-w-7xl mx-auto flex flex-col items-center justify-center text-center reveal relative z-10">
+        <p class="text-brand-400 font-semibold uppercase tracking-widest mb-4 md:mb-6 text-xs md:text-sm">Vamos criar juntos?</p>
         
         <a href="mailto:ariadnechaves233@gmail.com" class="hover-trigger inline-block relative group">
-            <h2 class="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter text-white transition-colors duration-500 group-hover:text-brand-300">
+            <h2 class="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter text-white transition-colors duration-500 group-hover:text-brand-300">
                 Me mande <br class="md:hidden">um olá.
             </h2>
-            <div class="absolute -bottom-4 left-0 w-0 h-1 bg-brand-400 transition-all duration-500 group-hover:w-full"></div>
+            <div class="absolute -bottom-2 md:-bottom-4 left-0 w-0 h-1 bg-brand-400 transition-all duration-500 group-hover:w-full"></div>
         </a>
 
-        <div class="mt-24 flex flex-col md:flex-row items-center gap-8 text-brand-300 font-medium text-sm tracking-wide">
+        <div class="mt-16 md:mt-24 flex flex-row items-center gap-6 md:gap-8 text-brand-300 font-medium text-xs md:text-sm tracking-wide">
             <a href="https://www.behance.net/ariadnechaves" target="_blank" class="hover-trigger hover:text-white transition-colors uppercase">Behance</a>
-            <span class="hidden md:block w-1 h-1 rounded-full bg-brand-500"></span>
-            <a href="https://www.linkedin.com/in/ariadne-chaves-ari/" target="_blank" class="hover-trigger hover:text-white transition-colors uppercase">LinkedIn</a>
+            <span class="w-1 h-1 rounded-full bg-brand-500"></span>
+            <a href="https://www.linkedin.com/in/ariadnechaves" target="_blank" class="hover-trigger hover:text-white transition-colors uppercase">LinkedIn</a>
         </div>
-        <div class="mt-12 text-xs text-brand-500/50">
+        <div class="mt-10 md:mt-12 text-xs text-brand-500/50">
             &copy; 2026 Ariadne Chaves. Design Minimalista & Eficiente.
         </div>
     </footer>
 
     <!-- Lógicas JavaScript (Cursor, Reveal, Luz Hero) -->
     <script>
-        // 1. Lógica Global do Cursor Lúdico
-        const cursorDot = document.querySelector('.cursor-dot');
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
+        // 1. Lógica Global do Cursor Lúdico (Atua apenas se o dispositivo suportar hover)
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
 
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            if(cursorDot) {
-                cursorDot.style.left = `${mouseX}px`;
-                cursorDot.style.top = `${mouseY}px`;
-            }
-        });
-
-        const hoverTriggers = document.querySelectorAll('.hover-trigger, a, button, iframe');
-        hoverTriggers.forEach(trigger => {
-            trigger.addEventListener('mouseenter', () => {
-                document.body.classList.add('cursor-hover');
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if(cursorDot) {
+                    cursorDot.style.left = `${mouseX}px`;
+                    cursorDot.style.top = `${mouseY}px`;
+                }
             });
-            trigger.addEventListener('mouseleave', () => {
-                document.body.classList.remove('cursor-hover');
-            });
-        });
 
-        // 2. Luz Dinâmica no Header (Glow Effect)
+            const hoverTriggers = document.querySelectorAll('.hover-trigger, a, button, iframe');
+            hoverTriggers.forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => {
+                    document.body.classList.add('cursor-hover');
+                });
+                trigger.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('cursor-hover');
+                });
+            });
+        }
+
+        // 2. Luz Dinâmica no Header (Glow Effect) - Suave e performática
         const hero = document.getElementById('hero');
         const heroGlow = document.getElementById('hero-glow');
         
-        if(hero && heroGlow) {
+        if(hero && heroGlow && window.matchMedia("(hover: hover)").matches) {
             hero.addEventListener('mousemove', (e) => {
                 const rect = hero.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 
-                // Suaviza o movimento da luz usando transform
                 heroGlow.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
             });
         }
 
-        // 3. Scroll Reveal Effect - Recriado em Vanilla JS (Substituindo Framer Motion)
+        // 3. Scroll Reveal Effect - Adaptado para Mobile e Desktop
         const revealContainer = document.getElementById('scroll-reveal-container');
         
         function updateScrollReveal() {
@@ -319,25 +349,24 @@
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
             
-            // Queremos que a animação aconteça enquanto o usuário rola o equivalente a 60% da altura da tela
+            // Dispositivo Mobile começa um pouco mais largo (95%) do que Desktop (90%)
+            const isMobile = window.innerWidth < 768;
+            const startWidth = isMobile ? 95 : 90;
+            const maxRadius = isMobile ? 2 : 3; // 2rem no mobile, 3rem no desktop
+            
             const maxScroll = windowHeight * 0.6; 
             
-            // Calcula o progresso de 0 a 1
             let progress = scrollY / maxScroll;
             if (progress > 1) progress = 1;
             if (progress < 0) progress = 0;
             
-            // Interpolando os valores
-            // Largura: de 90% para 100%
-            const currentWidth = 90 + (10 * progress);
-            // Border Radius: de 3rem (48px) para 0px
-            const currentRadius = 3 - (3 * progress);
+            // Largura interpola de startWidth para 100
+            const currentWidth = startWidth + ((100 - startWidth) * progress);
+            const currentRadius = maxRadius - (maxRadius * progress);
             
-            // Aplica os estilos via JS inline de forma performática
             revealContainer.style.width = `${currentWidth}%`;
             revealContainer.style.borderRadius = `${currentRadius}rem`;
             
-            // Se chegou no topo da tela, tira o border-radius completamente para parecer uma página normal
             if(progress === 1) {
                 revealContainer.style.borderRadius = '0';
                 revealContainer.style.width = '100%';
@@ -346,7 +375,7 @@
 
         window.addEventListener('scroll', updateScrollReveal, { passive: true });
         window.addEventListener('resize', updateScrollReveal);
-        updateScrollReveal(); // Setup inicial
+        updateScrollReveal();
 
         // 4. Animação de entrada dos elementos (Fade Up)
         function reveal() {
@@ -354,7 +383,7 @@
             for (let i = 0; i < reveals.length; i++) {
                 const windowHeight = window.innerHeight;
                 const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 100; // Começa a revelar 100px antes
+                const elementVisible = 50; // Mais tolerante no mobile
                 
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
@@ -362,7 +391,7 @@
             }
         }
         window.addEventListener("scroll", reveal, { passive: true });
-        reveal(); // Dispara ao carregar
+        reveal();
     </script>
 </body>
 </html>
