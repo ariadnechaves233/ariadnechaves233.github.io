@@ -43,7 +43,6 @@
     <style>
         /* 
          * FORÇAR REMOÇÃO DO CURSOR NATIVO APENAS EM DESKTOP
-         * O Media Query (hover: hover) garante que no Mobile o touch continue funcionando nativamente
          */
         @media (hover: hover) and (pointer: fine) {
             * {
@@ -151,11 +150,11 @@
 </head>
 <body class="bg-brand-900 text-brand-50 font-sans antialiased overflow-x-hidden selection:bg-brand-400 selection:text-white">
 
-    <!-- Cursor Customizado (Só aparece e atua no desktop por causa do JS/CSS) -->
+    <!-- Cursor Customizado (Só aparece e atua no desktop) -->
     <div class="cursor-dot hidden md:block"></div>
 
-    <!-- Navegação Centralizada (Responsiva e com Mix-Blend para contraste automático no fundo branco) -->
-    <nav class="w-full py-6 md:py-8 px-6 max-w-7xl mx-auto flex justify-center items-center fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white pointer-events-none">
+    <!-- Navegação Centralizada com Transição Inteligente de Cores -->
+    <nav id="main-nav" class="w-full py-6 md:py-8 px-6 max-w-7xl mx-auto flex justify-center items-center fixed top-0 left-0 right-0 z-50 pointer-events-none text-white transition-colors duration-300">
         <div class="flex gap-6 md:gap-12 text-sm md:text-base font-medium tracking-wide pointer-events-auto">
             <a href="#projetos" class="hover-trigger transition-opacity hover:opacity-70">Projetos</a>
             <a href="#sobre" class="hover-trigger transition-opacity hover:opacity-70">Sobre</a>
@@ -188,7 +187,6 @@
     </header>
 
     <!-- Container do Efeito Scroll Reveal -->
-    <!-- Ajustado para w-[95%] no mobile e w-[90%] no desktop para melhor uso do espaço -->
     <div id="scroll-reveal-container" class="bg-brand-50 text-brand-900 mx-auto w-[95%] md:w-[90%] rounded-[2rem] md:rounded-[3rem] overflow-hidden origin-top relative z-20 shadow-2xl pb-16 md:pb-24 transition-all ease-out will-change-transform">
         
         <!-- Seção de Projetos -->
@@ -298,7 +296,7 @@
         </div>
     </footer>
 
-    <!-- Lógicas JavaScript (Cursor, Reveal, Luz Hero) -->
+    <!-- Lógicas JavaScript (Cursor, Reveal, Luz Hero, Navegação) -->
     <script>
         // 1. Lógica Global do Cursor Lúdico (Atua apenas se o dispositivo suportar hover)
         if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
@@ -340,8 +338,9 @@
             });
         }
 
-        // 3. Scroll Reveal Effect - Adaptado para Mobile e Desktop
+        // 3. Scroll Reveal Effect & Cor da Navegação (Corrigido para evitar verde)
         const revealContainer = document.getElementById('scroll-reveal-container');
+        const mainNav = document.getElementById('main-nav');
         
         function updateScrollReveal() {
             if(!revealContainer) return;
@@ -349,18 +348,16 @@
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
             
-            // Dispositivo Mobile começa um pouco mais largo (95%) do que Desktop (90%)
+            // --- Parte A: Animação do Container ---
             const isMobile = window.innerWidth < 768;
             const startWidth = isMobile ? 95 : 90;
-            const maxRadius = isMobile ? 2 : 3; // 2rem no mobile, 3rem no desktop
+            const maxRadius = isMobile ? 2 : 3; 
             
             const maxScroll = windowHeight * 0.6; 
-            
             let progress = scrollY / maxScroll;
             if (progress > 1) progress = 1;
             if (progress < 0) progress = 0;
             
-            // Largura interpola de startWidth para 100
             const currentWidth = startWidth + ((100 - startWidth) * progress);
             const currentRadius = maxRadius - (maxRadius * progress);
             
@@ -370,6 +367,21 @@
             if(progress === 1) {
                 revealContainer.style.borderRadius = '0';
                 revealContainer.style.width = '100%';
+            }
+
+            // --- Parte B: Inteligência da Cor da Navegação (Adeus Verde!) ---
+            if(mainNav) {
+                const rect = revealContainer.getBoundingClientRect();
+                const navHeight = 80; // Margem aproximada da altura da navegação
+                
+                // Verifica se a barra de navegação está navegando por cima do container branco
+                if (rect.top <= navHeight && rect.bottom >= navHeight) {
+                    mainNav.classList.remove('text-white');
+                    mainNav.classList.add('text-brand-900'); // Fica roxo escuro no fundo branco
+                } else {
+                    mainNav.classList.add('text-white'); // Fica branco nos fundos escuros (Hero e Footer)
+                    mainNav.classList.remove('text-brand-900');
+                }
             }
         }
 
@@ -383,7 +395,7 @@
             for (let i = 0; i < reveals.length; i++) {
                 const windowHeight = window.innerHeight;
                 const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 50; // Mais tolerante no mobile
+                const elementVisible = 50; 
                 
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
