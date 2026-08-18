@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ariadne Chaves | Designer Gráfico & Criação Digital</title>
-    <meta name="description" content="Portfólio de Ariadne Chaves de Lima - Designer Gráfico Júnior especialista em criação digital, comunicação visual e Inteligência Artificial.">
+    <title>Ariadne Chaves | Designer Gráfica</title>
+    <meta name="description" content="Portfólio de Ariadne Chaves - Designer Gráfica especializada em identidades visuais, comunicação digital e Inteligência Artificial.">
     
-    <!-- Google Fonts: Nunito -->
+    <!-- Google Fonts: Inter para Minimalismo e Eficiência -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,35 +20,20 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Nunito"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif'],
                     },
                     colors: {
-                        // Paleta sob medida (Roxos Claros ao Berinjela)
+                        // Paleta refinada com o tom aprovado #240046
                         brand: {
-                            50: '#F8F6FA',  // Fundo principal (quase branco/lavanda)
-                            100: '#EFEAF6', // Fundo de seções secundárias
-                            200: '#DED3EF', // Bordas e detalhes
-                            300: '#C4B0E3', // Tags e pílulas
-                            400: '#A482D1', // Hover e acentos
-                            500: '#8A5BB8', // Destaques sutis
-                            800: '#3D2554', // Títulos
-                            900: '#231333', // Texto principal (substitui o preto)
-                        }
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'blob': 'blob 7s infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                            50: '#F8F6FA',
+                            100: '#EFEAF6',
+                            200: '#DED3EF',
+                            300: '#C4B0E3',
+                            400: '#A482D1',
+                            500: '#8A5BB8',
+                            800: '#3D2554',
+                            900: '#240046', // O novo tom escuro, elegante e profissional
+                            dark: '#1A0033' // Variação ultra-escura para profundidade
                         }
                     }
                 }
@@ -56,14 +41,14 @@
         }
     </script>
 
-    <!-- Estilos Customizados (Cursor lúdico, scrollbar, alvenaria) -->
     <style>
-        /* Esconde o cursor nativo em telas com mouse */
-        @media (pointer: fine) {
-            body {
-                cursor: none;
-            }
-            /* O iframe do Behance puxa o próprio cursor, o que é ótimo para o UX do usuário entender que é interativo */
+        /* 
+         * FORÇAR REMOÇÃO DO CURSOR NATIVO 
+         * Isso impede o "piscar" para a mãozinha ao passar sobre links e botões.
+         * (Nota: Dentro do iframe do Behance, as regras deles assumem o controle, o que mantém a usabilidade nativa do player).
+         */
+        * {
+            cursor: none !important;
         }
 
         /* Custom Scrollbar */
@@ -71,21 +56,21 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #F8F6FA;
+            background: #240046;
         }
         ::-webkit-scrollbar-thumb {
-            background: #DED3EF;
+            background: #A482D1;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #C4B0E3;
+            background: #8A5BB8;
         }
 
-        /* Classes para o Cursor Lúdico */
+        /* Cursor Lúdico Customizado */
         .cursor-dot {
             width: 8px;
             height: 8px;
-            background-color: #8A5BB8;
+            background-color: #A482D1;
             position: fixed;
             top: 0;
             left: 0;
@@ -93,47 +78,29 @@
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s;
         }
-        .cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #A482D1;
-            position: fixed;
-            top: 0;
-            left: 0;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, border-color 0.2s;
-            /* Suavidade no seguir do mouse feita via JS */
-        }
-
-        /* Efeito de expansão quando houver link/interação */
+        
         .cursor-hover .cursor-dot {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(164, 130, 209, 0.2);
-        }
-        .cursor-hover .cursor-outline {
-            width: 60px;
-            height: 60px;
-            border-color: transparent;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(164, 130, 209, 0.3);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(164, 130, 209, 0.5);
         }
 
         /* Animações de Scroll (Reveal) */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Grid Masonry Dinâmico */
+        /* Grid Masonry para os Projetos */
         .masonry-grid {
             column-gap: 2rem;
         }
@@ -145,218 +112,180 @@
             margin-bottom: 2rem;
         }
 
-        /* Ajuste responsivo dos iframes do Behance para caberem perfeitamente no Masonry */
         .behance-embed {
             width: 100% !important;
             height: 380px !important;
             border: none;
             border-radius: 1.5rem;
+            background-color: #EFEAF6;
         }
     </style>
 </head>
-<body class="bg-brand-50 text-brand-900 font-sans antialiased overflow-x-hidden selection:bg-brand-300 selection:text-brand-900">
+<body class="bg-brand-900 text-brand-50 font-sans antialiased overflow-x-hidden selection:bg-brand-400 selection:text-white">
 
     <!-- Cursor Customizado -->
     <div class="cursor-dot hidden md:block"></div>
-    <div class="cursor-outline hidden md:block"></div>
 
-    <!-- Background Shapes (Blur Decorativo) -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]">
-        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-brand-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-60 animate-blob"></div>
-        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-brand-300 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob animation-delay-2000"></div>
-        <div class="absolute bottom-[-20%] left-[20%] w-96 h-96 bg-brand-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-50 animate-blob animation-delay-4000"></div>
-    </div>
-
-    <!-- Navegação Minimalista -->
-    <nav class="w-full py-8 px-6 md:px-12 max-w-7xl mx-auto flex justify-between items-center fixed top-0 left-0 right-0 z-50 mix-blend-difference bg-brand-50/50 backdrop-blur-md rounded-b-3xl shadow-sm border-b border-brand-100/50">
-        <a href="#" class="text-xl font-bold tracking-tight text-brand-900 hover-trigger hover:text-brand-500 transition-colors">Ariadne.</a>
-        <div class="hidden md:flex gap-8 text-sm font-semibold tracking-wide text-brand-800">
-            <a href="#projetos" class="hover-trigger hover:text-brand-500 transition-colors">Projetos</a>
-            <a href="#sobre" class="hover-trigger hover:text-brand-500 transition-colors">Sobre</a>
-            <a href="#contato" class="hover-trigger hover:text-brand-500 transition-colors">Contato</a>
+    <!-- Navegação (Mistura-se dinamicamente com o fundo) -->
+    <nav class="w-full py-8 px-6 md:px-12 max-w-7xl mx-auto flex justify-between items-center fixed top-0 left-0 right-0 z-50 mix-blend-difference text-white pointer-events-none">
+        <!-- Pointer-events-auto recoloca a interatividade apenas nos links -->
+        <a href="#" class="text-xl font-bold tracking-tight pointer-events-auto hover-trigger">Ariadne.</a>
+        <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide pointer-events-auto">
+            <a href="#projetos" class="hover-trigger transition-opacity hover:opacity-70">Projetos</a>
+            <a href="#sobre" class="hover-trigger transition-opacity hover:opacity-70">Sobre</a>
+            <a href="#contato" class="hover-trigger transition-opacity hover:opacity-70">Contato</a>
         </div>
-        <!-- Botão Mobile Mínimo -->
-        <a href="#contato" class="md:hidden text-sm font-bold text-brand-500 bg-brand-100 px-4 py-2 rounded-full">Falar</a>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="min-h-screen flex flex-col justify-center px-6 md:px-12 max-w-7xl mx-auto pt-24">
-        <div class="max-w-4xl reveal">
-            <p class="text-brand-500 font-bold tracking-widest uppercase text-sm mb-4">Designer Gráfico Júnior</p>
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-8 text-brand-900">
-                Design com <br class="hidden md:block">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-300">propósito,</span> <br>
-                estética e inovação.
+    <!-- Header Escuro, Profissional e Dinâmico (#240046) -->
+    <header id="hero" class="relative min-h-[100vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-brand-900">
+        
+        <!-- Efeito de Luz Dinâmica no Fundo (Segue o mouse) -->
+        <div id="hero-glow" class="absolute w-[800px] h-[800px] bg-brand-500/20 rounded-full blur-[150px] pointer-events-none transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-100 ease-out"></div>
+
+        <div class="relative z-10 max-w-4xl flex flex-col items-center">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 text-white drop-shadow-2xl">
+                Ariadne Chaves
             </h1>
-            <p class="text-lg md:text-2xl text-brand-800 font-light max-w-2xl leading-relaxed mb-12">
-                Unindo comunicação visual, marketing e inteligência artificial para construir identidades digitais que conectam e emocionam.
+            <p class="text-xl md:text-2xl text-brand-300 font-light tracking-wide mb-12">
+                Designer Gráfica
             </p>
-            <div class="flex gap-4 items-center">
-                <a href="#projetos" class="hover-trigger group flex items-center gap-3 bg-brand-900 text-brand-50 px-8 py-4 rounded-full font-bold hover:bg-brand-500 transition-all duration-300 shadow-lg shadow-brand-200/50">
-                    Ver Projetos
-                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
-            </div>
+            
+            <a href="#projetos" class="hover-trigger group relative overflow-hidden flex items-center gap-3 bg-white text-brand-900 px-8 py-4 rounded-full font-semibold hover:bg-brand-100 transition-all duration-300 shadow-[0_0_40px_rgba(164,130,209,0.3)]">
+                <span class="relative z-10">Ver Projetos</span>
+                <svg class="w-4 h-4 relative z-10 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </a>
         </div>
     </header>
 
-    <!-- Seção de Projetos (Grid Masonry) -->
-    <section id="projetos" class="py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
-        <div class="mb-16 reveal">
-            <h2 class="text-3xl md:text-5xl font-black tracking-tight text-brand-900 mb-4">Galeria Criativa</h2>
-            <p class="text-brand-800 font-light text-lg">Um mergulho visual nas minhas criações recentes.</p>
-        </div>
-
-        <div class="masonry-grid reveal">
-            
-            <!-- Projeto 1: Mascote Marina -->
-            <div class="masonry-item relative group hover-trigger">
-                <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-brand-300/40 group-hover:-translate-y-2">
-                    <iframe src="https://www.behance.net/embed/project/250113827?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
-                </div>
+    <!-- Container do Efeito Scroll Reveal (Recriado em Vanilla JS) -->
+    <!-- Ele começa com 90% da largura e bordas arredondadas, e expande para 100% cobrindo a tela -->
+    <div id="scroll-reveal-container" class="bg-brand-50 text-brand-900 mx-auto w-[90%] rounded-[3rem] overflow-hidden origin-top relative z-20 shadow-2xl pb-24 transition-all ease-out will-change-transform">
+        
+        <!-- Seção de Projetos -->
+        <section id="projetos" class="py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+            <div class="mb-16 reveal text-center md:text-left">
+                <h2 class="text-4xl md:text-6xl font-black tracking-tight text-brand-900 mb-4">Projetos</h2>
             </div>
 
-            <!-- Projeto 2: 7 Brasas Logo -->
-            <div class="masonry-item relative group hover-trigger">
-                <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-brand-300/40 group-hover:-translate-y-2">
-                    <iframe src="https://www.behance.net/embed/project/250114549?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+            <div class="masonry-grid reveal">
+                <!-- Projeto 1: Mascote Marina -->
+                <div class="masonry-item hover-trigger">
+                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                        <iframe src="https://www.behance.net/embed/project/250113827?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Projeto 3: ECR Logo -->
-            <div class="masonry-item relative group hover-trigger">
-                <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-brand-300/40 group-hover:-translate-y-2">
-                    <iframe src="https://www.behance.net/embed/project/234673731?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                <!-- Projeto 2: 7 Brasas Logo -->
+                <div class="masonry-item hover-trigger">
+                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                        <iframe src="https://www.behance.net/embed/project/250114549?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Projeto 4: Fênix Sertão -->
-            <div class="masonry-item relative group hover-trigger">
-                <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-brand-300/40 group-hover:-translate-y-2">
-                    <iframe src="https://www.behance.net/embed/project/250115177?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                <!-- Projeto 3: ECR Logo -->
+                <div class="masonry-item hover-trigger">
+                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                        <iframe src="https://www.behance.net/embed/project/234673731?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Projeto 5: Endomarketing -->
-            <div class="masonry-item relative group hover-trigger">
-                <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-brand-300/40 group-hover:-translate-y-2">
-                    <iframe src="https://www.behance.net/embed/project/217003613?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                <!-- Projeto 4: Fênix Sertão -->
+                <div class="masonry-item hover-trigger">
+                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                        <iframe src="https://www.behance.net/embed/project/250115177?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Projeto 6: Social Media -->
-            <div class="masonry-item relative group hover-trigger">
-                <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-brand-300/40 group-hover:-translate-y-2">
-                    <iframe src="https://www.behance.net/embed/project/217002125?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                <!-- Projeto 5: Endomarketing -->
+                <div class="masonry-item hover-trigger">
+                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                        <iframe src="https://www.behance.net/embed/project/217003613?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
+                    </div>
                 </div>
-            </div>
 
-        </div>
-    </section>
-
-    <!-- Seção Sobre e Habilidades -->
-    <section id="sobre" class="py-24 px-6 md:px-12 max-w-7xl mx-auto bg-brand-100/50 rounded-[3rem] my-12 reveal">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-            
-            <div class="lg:col-span-5">
-                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-brand-900 mb-6">A mente <br>por trás <br>dos pixels.</h2>
-                <a href="https://www.linkedin.com/in/ariadne-chaves-ari/" target="_blank" class="hover-trigger inline-flex items-center gap-2 text-brand-500 font-bold uppercase tracking-wider text-sm hover:text-brand-800 transition-colors">
-                    Conecte-se no LinkedIn
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                </a>
-            </div>
-
-            <div class="lg:col-span-7 flex flex-col gap-8">
-                <div class="text-lg text-brand-800 font-light leading-relaxed space-y-6">
-                    <p>
-                        Sou uma <strong class="font-bold text-brand-900">Designer Gráfico Júnior</strong> apaixonada pela intersecção entre criatividade, comunicação e tecnologia. Minha jornada não é linear: carrego o olhar estético refinado da minha formação em Gastronomia, unido às estratégias do Marketing Digital e consolidado pela técnica do Design Gráfico.
-                    </p>
-                    <p>
-                        Atualmente, meu foco está na criação de peças digitais, diagramação de layouts corporativos, identidades visuais sofisticadas e na integração da <strong>Inteligência Artificial</strong> (Engenharia de Prompts e UX/UI) nos processos criativos, gerando resultados únicos, acessíveis e focados no usuário.
-                    </p>
-                </div>
-                
-                <!-- Habilidades Técnicas (Pills Minimalistas) -->
-                <div class="pt-6 border-t border-brand-200">
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-brand-500 mb-6">Stack & Habilidades</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-5 py-2 rounded-full border border-brand-300 text-brand-900 text-sm font-semibold hover:bg-brand-200 transition-colors cursor-default">Figma & UI/UX</span>
-                        <span class="px-5 py-2 rounded-full border border-brand-300 text-brand-900 text-sm font-semibold hover:bg-brand-200 transition-colors cursor-default">Adobe CC (PS, AI)</span>
-                        <span class="px-5 py-2 rounded-full border border-brand-300 text-brand-900 text-sm font-semibold hover:bg-brand-200 transition-colors cursor-default">Identidade Visual</span>
-                        <span class="px-5 py-2 rounded-full border border-brand-300 text-brand-900 text-sm font-semibold hover:bg-brand-200 transition-colors cursor-default">Inteligência Artificial</span>
-                        <span class="px-5 py-2 rounded-full border border-brand-300 text-brand-900 text-sm font-semibold hover:bg-brand-200 transition-colors cursor-default">Edição de Vídeo (CapCut)</span>
-                        <span class="px-5 py-2 rounded-full border border-brand-300 text-brand-900 text-sm font-semibold hover:bg-brand-200 transition-colors cursor-default">Diagramação & PPT</span>
-                        <span class="px-5 py-2 rounded-full border border-brand-300 text-brand-900 text-sm font-semibold hover:bg-brand-200 transition-colors cursor-default">Marketing Digital</span>
+                <!-- Projeto 6: Social Media -->
+                <div class="masonry-item hover-trigger">
+                    <div class="bg-white rounded-[2rem] p-2 shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-brand-300/40 hover:-translate-y-2">
+                        <iframe src="https://www.behance.net/embed/project/217002125?ilo0=1" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin" class="behance-embed"></iframe>
                     </div>
                 </div>
             </div>
+        </section>
 
-        </div>
-    </section>
+        <!-- Seção Sobre (Nova Copy & Design) -->
+        <section id="sobre" class="py-24 px-6 md:px-12 max-w-5xl mx-auto reveal">
+            
+            <!-- Título com Degradê Roxo Escuro para Lavanda -->
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-12 text-transparent bg-clip-text bg-gradient-to-r from-brand-900 to-brand-400">
+                A mente por trás dos pixels.
+            </h2>
+            
+            <div class="space-y-8 text-lg md:text-xl text-brand-800 font-light leading-relaxed">
+                <p>
+                    Antes de ser designer, eu era cozinheira. Parece estranho, eu sei, mas é exatamente daí que vem quem eu sou hoje: a Gastronomia me ensinou a prestar atenção nos detalhes, a cuidar de cada etapa de um processo e a enxergar beleza nas pequenas coisas. Foi só um passo até eu perceber que queria fazer isso com imagens, cores e layouts.
+                </p>
+                <p>
+                    Hoje sou <strong class="font-semibold text-brand-900">Designer Gráfica</strong> e adoro o que faço: transformar uma ideia solta em algo visual que realmente comunica. Pensar em cada detalhe de um layout faz parte do meu desenvolvimento profissional, e é algo que levo a sério em cada projeto. 
+                </p>
+                <p>
+                    No meio do caminho, também descobri a <strong class="font-semibold text-brand-900">Inteligência Artificial</strong> como uma parceira criativa, e hoje ela faz parte do meu processo, sempre a favor de resultados mais bonitos, acessíveis e feitos pensando em quem vai ver.
+                </p>
+                <p class="font-medium text-brand-900 pt-4">
+                    No fim das contas, sou movida por criar coisas que fazem sentido, com carinho e atenção em cada detalhe.
+                </p>
+            </div>
 
-    <!-- Footer / Contato (Imersivo) -->
-    <footer id="contato" class="py-32 px-6 md:px-12 max-w-7xl mx-auto flex flex-col items-center justify-center text-center reveal mt-12">
-        <p class="text-brand-500 font-bold uppercase tracking-widest mb-6">Vamos criar juntos?</p>
+            <!-- Botão Secundário LinkedIn -->
+            <div class="mt-12 pt-12 border-t border-brand-200">
+                <a href="https://www.linkedin.com/in/ariadne-chaves-ari/" target="_blank" class="hover-trigger inline-flex items-center gap-3 text-brand-900 font-semibold uppercase tracking-wider text-sm hover:text-brand-500 transition-colors">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                    Disponível para novos desafios — Conecte-se no LinkedIn
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+            </div>
+        </section>
+        
+    </div> <!-- Fim do Container de Scroll Reveal -->
+
+    <!-- Footer Escuro (Integra-se ao fundo da página) -->
+    <footer id="contato" class="py-32 px-6 md:px-12 max-w-7xl mx-auto flex flex-col items-center justify-center text-center reveal relative z-10">
+        <p class="text-brand-400 font-semibold uppercase tracking-widest mb-6 text-sm">Vamos criar juntos?</p>
         
         <a href="mailto:ariadnechaves233@gmail.com" class="hover-trigger inline-block relative group">
-            <h2 class="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter text-brand-900 transition-colors duration-500 group-hover:text-brand-400">
+            <h2 class="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter text-white transition-colors duration-500 group-hover:text-brand-300">
                 Me mande <br class="md:hidden">um olá.
             </h2>
             <div class="absolute -bottom-4 left-0 w-0 h-1 bg-brand-400 transition-all duration-500 group-hover:w-full"></div>
         </a>
 
-        <div class="mt-24 flex flex-col md:flex-row items-center gap-8 text-brand-800 font-semibold text-sm">
-            <p class="font-light">São Paulo, SP</p>
-            <span class="hidden md:block w-1.5 h-1.5 rounded-full bg-brand-300"></span>
-            <a href="https://www.behance.net/ariadnechaves" target="_blank" class="hover-trigger hover:text-brand-500 transition-colors uppercase tracking-wider">Behance</a>
-            <span class="hidden md:block w-1.5 h-1.5 rounded-full bg-brand-300"></span>
-            <a href="https://www.linkedin.com/in/ariadnechaves" target="_blank" class="hover-trigger hover:text-brand-500 transition-colors uppercase tracking-wider">LinkedIn</a>
+        <div class="mt-24 flex flex-col md:flex-row items-center gap-8 text-brand-300 font-medium text-sm tracking-wide">
+            <a href="https://www.behance.net/ariadnechaves" target="_blank" class="hover-trigger hover:text-white transition-colors uppercase">Behance</a>
+            <span class="hidden md:block w-1 h-1 rounded-full bg-brand-500"></span>
+            <a href="https://www.linkedin.com/in/ariadne-chaves-ari/" target="_blank" class="hover-trigger hover:text-white transition-colors uppercase">LinkedIn</a>
         </div>
-        <div class="mt-12 text-xs font-light text-brand-400">
-            &copy; 2026 Ariadne Chaves. Design feito sob medida.
+        <div class="mt-12 text-xs text-brand-500/50">
+            &copy; 2026 Ariadne Chaves. Design Minimalista & Eficiente.
         </div>
     </footer>
 
-    <!-- Lógica de Interações Lúdicas (JS) -->
+    <!-- Lógicas JavaScript (Cursor, Reveal, Luz Hero) -->
     <script>
-        // 1. Cursor Customizado (Lúdico)
+        // 1. Lógica Global do Cursor Lúdico
         const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
-        
-        let mouseX = 0, mouseY = 0;
-        let outlineX = 0, outlineY = 0;
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
 
         window.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            
-            // Dot segue instantaneamente
             if(cursorDot) {
                 cursorDot.style.left = `${mouseX}px`;
                 cursorDot.style.top = `${mouseY}px`;
             }
         });
 
-        // Efeito de delay suave no outline
-        function animateCursor() {
-            let distX = mouseX - outlineX;
-            let distY = mouseY - outlineY;
-            
-            outlineX += distX * 0.15;
-            outlineY += distY * 0.15;
-            
-            if(cursorOutline) {
-                cursorOutline.style.left = `${outlineX}px`;
-                cursorOutline.style.top = `${outlineY}px`;
-            }
-            
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Expansão do cursor ao passar por elementos iterativos
         const hoverTriggers = document.querySelectorAll('.hover-trigger, a, button, iframe');
-        
         hoverTriggers.forEach(trigger => {
             trigger.addEventListener('mouseenter', () => {
                 document.body.classList.add('cursor-hover');
@@ -366,20 +295,73 @@
             });
         });
 
-        // 2. Animação de Reveal no Scroll
+        // 2. Luz Dinâmica no Header (Glow Effect)
+        const hero = document.getElementById('hero');
+        const heroGlow = document.getElementById('hero-glow');
+        
+        if(hero && heroGlow) {
+            hero.addEventListener('mousemove', (e) => {
+                const rect = hero.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Suaviza o movimento da luz usando transform
+                heroGlow.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+            });
+        }
+
+        // 3. Scroll Reveal Effect - Recriado em Vanilla JS (Substituindo Framer Motion)
+        const revealContainer = document.getElementById('scroll-reveal-container');
+        
+        function updateScrollReveal() {
+            if(!revealContainer) return;
+            
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            // Queremos que a animação aconteça enquanto o usuário rola o equivalente a 60% da altura da tela
+            const maxScroll = windowHeight * 0.6; 
+            
+            // Calcula o progresso de 0 a 1
+            let progress = scrollY / maxScroll;
+            if (progress > 1) progress = 1;
+            if (progress < 0) progress = 0;
+            
+            // Interpolando os valores
+            // Largura: de 90% para 100%
+            const currentWidth = 90 + (10 * progress);
+            // Border Radius: de 3rem (48px) para 0px
+            const currentRadius = 3 - (3 * progress);
+            
+            // Aplica os estilos via JS inline de forma performática
+            revealContainer.style.width = `${currentWidth}%`;
+            revealContainer.style.borderRadius = `${currentRadius}rem`;
+            
+            // Se chegou no topo da tela, tira o border-radius completamente para parecer uma página normal
+            if(progress === 1) {
+                revealContainer.style.borderRadius = '0';
+                revealContainer.style.width = '100%';
+            }
+        }
+
+        window.addEventListener('scroll', updateScrollReveal, { passive: true });
+        window.addEventListener('resize', updateScrollReveal);
+        updateScrollReveal(); // Setup inicial
+
+        // 4. Animação de entrada dos elementos (Fade Up)
         function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100;
+            const reveals = document.querySelectorAll(".reveal");
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100; // Começa a revelar 100px antes
                 
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
                 }
             }
         }
-        window.addEventListener("scroll", reveal);
+        window.addEventListener("scroll", reveal, { passive: true });
         reveal(); // Dispara ao carregar
     </script>
 </body>
